@@ -1,0 +1,254 @@
+<html>
+
+ <head> 
+ <title>Jquery</title> 
+
+ <script
+ src="https://code.jquery.com/jquery-3.2.1.js"
+ integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+ crossorigin="anonymous"></script>
+
+ </head>
+ 
+  <body>
+ 
+ 
+
+ <label> Aşağıdaki hiçbir input boş olmamalı:
+ </label>
+ 
+ <div id="error">
+ </div>
+
+ <div class="form-group">
+ <label>Boş olmamalı: </label>
+ <input type="text" name="name" id="name">
+ <label class="errormessageColor" id="nameErrorID"></label>
+ 
+ </div>
+ 
+ <div class="form-group"> 
+ <label for="email">E-mail:</label>
+ <input type="text" name="email" id="email" >
+ <label class="errormessageColor" id="emailErrorID"></label>
+ </div>
+
+ <div class="form-group"> 
+ <label for="phone">Sadece Sayısal:</label>
+ <input type="text" name="-sayisal" id="sayisal" >
+ <label class="errormessageColor" id="sayisalErrorID"></label>
+ </div>
+
+ <div class="form-group"> 
+ <label for="sayisal12">Sadece sayısal olan ve 12 basamak uzunluğundaki sayi:</label>
+ <input type="text" name="sayisal12" id="sayisal12" >
+ <label class="errormessageColor" id="sayisal12ErrorID"></label>
+ </div>
+
+ <div class="form-group"> 
+ <label for="sadeceharf">Sadece harf (a..z veya A..Z): </label>
+ <input type="text" name="sadeceharf" id="sadeceharf" >
+ <label class="errormessageColor" id="sadeceharfErrorID"></label>
+ </div>
+
+ <div class="form-group"> 
+ <label for="string30">Sadece harf ve en fazla 30 uzunlukta olan string: </label>
+ <input type="text" name="string30" id="string30" >
+ <label class="errormessageColor" id="string30ErrorID"></label>
+ </div>
+
+ <div class="form-group"> 
+ <label for="uckelime">3 kelimeden oluşan string: </label>
+ <input type="text" name="uckelime" id="uckelime" >
+ <label class="errormessageColor" id="uckelimeErrorID"></label>
+ </div>
+
+ <div class="form-group">
+ <label for="karisik">En az 1 büyük harf, en az 1 küçük harf, en az bir rakam ve en az 1 noktalama işareti içeren ve en az 8 uzunluğunda olan metin:</label>
+ <input type="text" name="karisik" id="karisik" >
+ <label class="errormessageColor" id="karisikErrorID"></label>
+ 
+ 
+ <button id="sbmt">Submit</button>
+
+ </div>
+ 
+ <script>
+ 
+ $(function(){
+ function bosKontrol(name)
+ {
+ var pattern=/^([a-zA-Z0-9])(*[.\:\,\;\!\?])$/;
+ return pattern.test(name);
+ }
+ function nameBosKontrol(name)
+ {
+ if(name=="")
+ {
+ return false;
+ }
+ }
+ 
+ function isEmail(email)
+ {
+ var pattern = /^([0-9a-zA-Z]([-_\\.]*[0-9a-zA-Z]+)*)@([0-9a-zA-Z]([-_\\.]*[0-9a-zA-Z]+)*)[\\.]([a-zA-Z]{2,9})$/;
+ return pattern.test(email);
+ }
+ function sayisalKontrol(sayisal)
+ {
+ var pattern= /^([0-9]*)$/;
+ if(sayisal == "")
+ {
+ return false;
+ }else{
+ return pattern.test(sayisal);
+ }
+ }
+ function sayisal12Kontrol(sayisal12)
+ {
+ var pattern=/^([0-9]{12})$/;
+ return pattern.test(sayisal12);
+ }
+ function harfKontrol(sadeceharf)
+ {
+ var pattern=/^([A-Za-z]*)$/;
+ if(sadeceharf == "")
+ {
+ return false;
+ }else{
+ return pattern.test(sadeceharf);
+ }
+ }
+ function string30Kontrol(string30)
+ {
+ var pattern=/^([a-zA-Z])([a-zA-Z].{0,28})$/;
+ return pattern.test(string30);
+ }
+ function ucKelimeKontrol(uckelime)
+ {
+ var pattern=/^([A-Za-z])+(\s)([A-Za-z])+(\s)([A-Za-z]+)$/;
+ return pattern.test(uckelime);
+ }
+ function karisikKontrol(karisik)
+ {
+ var pattern=/^((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W).{8,})$/;
+ return pattern.test(karisik);
+ }
+ $("#sbmt").click(function(){
+ var errormessage = "";
+ var emailErrormessage="";
+ var sayisalErrormessage = "";
+ var sayisal12Errormessage = "";
+ var sadeceharfErrormessage = "";
+ var string30Errormessage = "";
+ var uckelimeErrormessage = "";
+ var karisikErrormessage = "";
+ var nameErrormessage = "";
+ $("#error").html(""); 
+ $("#nameErrorID").html(""); 
+ $("#emailErrorID").html(""); 
+ $("#sayisalErrorID").html("");
+ $("#sayisal12ErrorID").html(""); 
+ $("#sadeceharfErrorID").html(""); 
+ $("#string30ErrorID").html(""); 
+ $("#uckelimeErrorID").html(""); 
+ $("#karisikErrorID").html(""); 
+ if( $("#name").val()=="" || $("#email").val()=="" || $("#sayisal").val()=="" || $("#sayisal12").val()=="" || $("#sadeceharf").val()=="" || $("#string30").val()=="" || $("#uckelime").val()=="" || $("#karisik").val()==""){
+ errormessage="<p>Boş alan bırakmayınız.</p>";
+ }
+ if(nameBosKontrol($("#name").val())==false){
+ nameErrormessage ="<p>Bu alan boş olamaz.</p>";
+ }
+ 
+ if(isEmail($("#email").val())==false){
+ emailErrormessage ="<p>E-mail alanını düzgün giriniz.</p>";
+ }
+ 
+ if(sayisalKontrol($("#sayisal").val())==false){
+ sayisalErrormessage="<p>Sadece sayısal değer girmelisiniz</p>"; 
+ }
+ 
+ if(sayisal12Kontrol($("#sayisal12").val())==false){
+ sayisal12Errormessage="<p>12 rakamdan oluşan bir değer girmelisiniz.</p>"; 
+ }
+ 
+ 
+ if(harfKontrol($("#sadeceharf").val())==false){
+ sadeceharfErrormessage="<p>Sadece harflerden oluşan bir değer girmelisiniz.</p>"; 
+ } 
+ if(string30Kontrol($("#string30").val())==false){
+ string30Errormessage+="<p>30 harfli bir string girmelisiniz.</p>";
+ } 
+ if(ucKelimeKontrol($("#uckelime").val())==false){
+ uckelimeErrormessage="<p>Girdiğiniz metin üç kelimeden oluşmalıdır.</p>";
+ }
+ if(karisikKontrol($("#karisik").val())==false){
+ karisikErrormessage="<p>İstenilenlere uygun metin girmelisiniz.</p>";
+ }
+ 
+ if(errormessage!=""){
+ $("#error").html(errormessage);
+ }
+ if(nameErrormessage!=""){
+ $("#nameErrorID").html(nameErrormessage);
+ }
+ if(emailErrormessage!=""){
+ $("#emailErrorID").html(emailErrormessage);
+ } 
+ if(sayisalErrormessage!=""){
+ $("#sayisalErrorID").html(sayisalErrormessage);
+ } 
+ if(sayisal12Errormessage!=""){
+ $("#sayisal12ErrorID").html(sayisal12Errormessage);
+ } 
+ if(sadeceharfErrormessage!=""){
+ $("#sadeceharfErrorID").html(sadeceharfErrormessage);
+ } 
+ if(string30Errormessage!=""){
+ $("#string30ErrorID").html(string30Errormessage);
+ } 
+ if(uckelimeErrormessage!=""){
+ $("#uckelimeErrorID").html(uckelimeErrormessage);
+ } 
+ if(karisikErrormessage!=""){
+ $("#karisikErrorID").html(karisikErrormessage);
+ } 
+ 
+ });
+ 
+ });
+ 
+ 
+ 
+ </script>
+ 
+ </body>
+ <style>
+ 
+ button
+ {
+ 
+ padding: 5px 5px;
+ border-radius: 5px;
+ cursor: pointer;
+ 
+ margin-top: 20px;
+ 
+ }
+ 
+ #error
+ {
+ color:red;
+ text-align: left;
+ 
+ }
+ .errormessageColor
+ {
+ color: red;
+ }
+ 
+ 
+ </style>
+
+
+</html>
